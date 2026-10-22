@@ -1,0 +1,18 @@
+{
+    "generated_at": "2026-10-22T12:11:19.826628+00:00",
+    "total_devices": 2,
+    "devices": [
+        {
+            "hostname": "R1",
+            "type": "router",
+            "management_ip": "192.168.1.1",
+            "status": "simulado"
+        },
+        {
+            "hostname": "SW1",
+            "type": "switch",
+            "management_ip": "192.168.1.2",
+            "status": "simulado"
+        }
+    ]
+}
