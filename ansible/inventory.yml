@@ -1,0 +1,14 @@
+# Inventario de Ansible. Las credenciales se leen de variables de entorno;
+# no se escriben aquí.
+all:
+  children:
+    iosxe:
+      hosts:
+        cat8k:
+          ansible_host: "{{ lookup('env', 'IOSXE_HOST') }}"
+      vars:
+        ansible_connection: network_cli
+        ansible_network_os: ios
+        ansible_user: "{{ lookup('env', 'IOSXE_USERNAME') }}"
+        ansible_password: "{{ lookup('env', 'IOSXE_PASSWORD') }}"
+        ansible_port: 22
