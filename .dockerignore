@@ -1,0 +1,12 @@
+.git
+.env
+config/.env
+__pycache__/
+.pytest_cache/
+venv/
+.venv/
+reports/
+tests/
+ansible/
+Jenkinsfile
+*.md
