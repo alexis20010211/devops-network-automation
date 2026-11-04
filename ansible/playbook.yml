@@ -1,0 +1,43 @@
+# Crea una loopback en el router IOS-XE y valida el estado antes y después.
+# Uso: ansible-playbook -i ansible/inventory.yml ansible/playbook.yml
+- name: Configurar loopback en IOS-XE
+  hosts: iosxe
+  gather_facts: false
+
+  vars:
+    loopback_id: 103
+    loopback_ip: 10.103.1.1
+    loopback_mask: 255.255.255.0
+
+  tasks:
+    - name: Estado antes del cambio
+      ios_command:
+        commands: show ip interface brief
+      register: antes
+
+    - name: Mostrar estado antes
+      debug:
+        var: antes.stdout_lines[0]
+
+    - name: Aplicar loopback
+      ios_config:
+        parents: "interface Loopback{{ loopback_id }}"
+        lines:
+          - description Configurado por Ansible
+          - "ip address {{ loopback_ip }} {{ loopback_mask }}"
+      register: cambio
+
+    - name: Estado despues del cambio
+      ios_command:
+        commands: "show running-config interface Loopback{{ loopback_id }}"
+      register: despues
+
+    - name: Mostrar estado despues
+      debug:
+        var: despues.stdout_lines[0]
+
+    - name: Validar que la IP quedo aplicada
+      assert:
+        that: "loopback_ip in despues.stdout[0]"
+        success_msg: "Loopback{{ loopback_id }} configurada correctamente"
+        fail_msg: "La loopback no tiene la IP esperada"
