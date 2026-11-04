@@ -1,0 +1,14 @@
+# Inventario de entrada de ejemplo (YAML) para probar la lectura de formatos.
+devices:
+  - hostname: R1-LIMA
+    type: router
+    management_ip: 192.168.10.1
+    status: reachable
+  - hostname: SW1-LIMA
+    type: switch
+    management_ip: 192.168.10.2
+    status: reachable
+  - hostname: SW2-AREQUIPA
+    type: switch
+    management_ip: 192.168.20.2
+    status: unreachable

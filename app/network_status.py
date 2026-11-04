@@ -85,6 +85,12 @@ def get_devices(config, token):
         raise DnacError("Respuesta de dispositivos inesperada.")
 
 
+def disable_ssl_warnings():
+    """Silencia el aviso de certificado no verificado (solo laboratorio)."""
+    import urllib3
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
 def print_devices(devices):
     """Muestra los dispositivos en una tabla sencilla."""
     print("{:<28} {:<16} {:<20} {}".format(
@@ -104,7 +110,7 @@ def main():
         config = load_config()
         if not config["verify"]:
             print("AVISO: verificación SSL desactivada (solo laboratorio).")
-            requests.packages.urllib3.disable_warnings()
+            disable_ssl_warnings()
         print("Consultando:", config["base_url"])
         token = get_token(config)
         devices = get_devices(config, token)
